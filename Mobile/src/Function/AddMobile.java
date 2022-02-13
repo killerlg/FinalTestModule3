@@ -5,181 +5,156 @@ import Model.HandCarriedMobile;
 import Model.Mobile;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddMobile {
     public Mobile addMobile(int id) {
-        Scanner scanner = new Scanner(System.in);
-        String selection = "";
-        boolean check = false;
+        boolean check = true;
+        Mobile mobile = null;
         do {
-
+            String selection = "";
             System.out.println("Chon loai dien thoai: ");
             System.out.println("1. Hang chinh hang");
             System.out.println("2. Hang xach tay");
-            selection = scanner.nextLine();
-            if (selection.equals("1") || selection.equals("2")) {
-                check = true;
-            }
-        } while (!check);
-        Mobile mobile = null;
-        if (selection.equals("1")) {
-            mobile = new GenuineMobile(id,inputName(), inputPrice(), inputAmount(), inputProducer(), inputInsuranceTime(), inputInsuranceLimit());
-        } else {
-            mobile = new HandCarriedMobile(id,inputName(),inputPrice(),inputAmount(),inputProducer(),inputNationHandcarried(),inputStatus());
-        }
+            selection = input("selection");
+            String name = input("name");
+            String price = input("price");
+            String amount = input("amount");
+            String producer = input("producer");
 
-        try{
-            File file =new File("data/mobile.csv");
-            if(!file.exists()){
+
+            if (selection.equals("1")) {
+                String type = "Hang chinh hang";
+                String insuranceTime = input("insurance time");
+                String insuranceLimit = input("insurance limit");
+
+                ArrayList<String> errors = validateOffical(name, price, amount, producer, insuranceTime, insuranceLimit);
+                if (errors.size() != 0) {
+                    mobile = new GenuineMobile(id, type, name, Double.parseDouble(price), Integer.parseInt(amount),
+                            producer, Integer.parseInt(insuranceTime), insuranceLimit);
+                } else {
+                    check = false;
+                    for (String error : errors) {
+                        System.out.println(error);
+                    }
+                }
+            } else if (selection.equals("2")) {
+                String type = "Hang xach tay";
+                String nationHandcarried = input("nation hand carried from");
+                String status = input("status");
+                ArrayList<String> errors = validateHandCarried(name, price, amount, producer, nationHandcarried, status);
+                if (errors.size() != 0) {
+                    mobile = new HandCarriedMobile(id, type, name, Double.parseDouble(price), Integer.parseInt(amount),
+                            producer, nationHandcarried, status);
+                } else {
+                    check = false;
+                    for (String error : errors) {
+                        System.out.println(error);
+                    }
+                }
+            } else {
+                check = false;
+                System.out.println("Mobile Type is Invalid!");
+            }
+
+        } while (!check);
+        writeMobileToFile(mobile);
+        return mobile;
+    }
+
+    public void writeMobileToFile(Mobile mobile) {
+        try {
+            File file = new File("data/mobile.csv");
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file,true);
+            FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(mobile.toString()+"\n");
+            bw.write(mobile.toString() + "\n");
             //Closing BufferedWriter Stream
             bw.close();
-            System.out.println("Data successfully appended at the end of file");
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("Exception occurred:");
             ioe.printStackTrace();
         }
-
-         return mobile;
-    };
-
-
-    public String inputName() {
-        Scanner scanner = new Scanner(System.in);
-        String name = "";
-        do {
-            System.out.print("Nhap ten dien thoai: ");
-                name = scanner.nextLine();}
-        while (name.equals(""));
-        return name;
     }
 
-    public Double inputPrice() {
-        Scanner scanner = new Scanner(System.in);
-        Double price = 0.0d;
-        boolean check = false;
-        do {
-            System.out.print("Nhap gia dien thoai: ");
-            String priceString = scanner.nextLine();
-
-            try {
-                price = Double.parseDouble(priceString);
-                if (price > 0) {
-                    check = true;
-                } else {
-                    check= false;
-                }
-            } catch(Exception e) {
-                System.out.println("So lieu nhao vao khong hop le");
+    public ArrayList<String> validateOffical(
+            String name, String price, String amount, String producer,
+            String insuranceTime, String insuranceLimit
+    ) {
+        ArrayList<String> errors = new ArrayList<>();
+        errors.addAll(validateGeneral(name, price, amount, producer));
+        // Validate insuranceTime
+        try {
+            if (Integer.parseInt(insuranceTime) >= 730 || Integer.parseInt(insuranceTime) < 0) {
+                errors.add("Insurance Time is Invalid!");
             }
-        } while (!check);
-        return price;
-    }
-
-    public int inputAmount() {
-        Scanner scanner = new Scanner(System.in);
-        int amount = 0;
-        boolean check = false;
-        do {
-            System.out.print("Nhap so luong dien thoai: ");
-            String priceString = scanner.nextLine();
-
-            try {
-                amount = Integer.parseInt(priceString);
-                if (amount > 0) {
-                    check = true;
-                } else {
-                    check= false;
-                }
-            } catch(Exception e) {
-                System.out.println("So lieu nhao vao khong hop le");
-            }
-        } while (!check);
-        return amount;
-    }
-
-    public String inputProducer() {
-        Scanner scanner = new Scanner(System.in);
-        String producerName = "";
-        do {
-            System.out.print("Nhap ten nha san xuat: ");
-            producerName = scanner.nextLine();}
-        while (producerName.equals(""));
-        return producerName;
-    }
-
-    public int inputInsuranceTime() {
-        Scanner scanner = new Scanner(System.in);
-        int insuranceTime = 0;
-        boolean check = false;
-        do {
-            System.out.print("Nhap thoi gian bao hanh: ");
-            String priceString = scanner.nextLine();
-
-            try {
-                insuranceTime = Integer.parseInt(priceString);
-                if (insuranceTime > 0 && insuranceTime<=730) {
-                    check = true;
-                } else {
-                    check= false;
-                }
-            } catch(Exception e) {
-                System.out.println("So lieu nhao vao khong hop le");
-            }
-        } while (!check);
-        return insuranceTime;
-    }
-
-    public String inputInsuranceLimit() {
-        Scanner scanner = new Scanner(System.in);
-        String insuranceLimit = "";
-        boolean check = false;
-        do {
-            System.out.print("Nhap pham vi bao hanh: ");
-            insuranceLimit = scanner.nextLine();
-            if (insuranceLimit.equalsIgnoreCase("Toan Quoc")
-            || insuranceLimit.equalsIgnoreCase("Quoc Te")) {
-                check = true;
-            }
+        } catch (Exception e) {
+            errors.add("Insurance Time is Invalid!");
         }
-        while (!check);
-        return insuranceLimit;
+        // Validate Insurance Limit
+        if (!(insuranceLimit.equalsIgnoreCase("Toan quoc") || !insuranceLimit.equalsIgnoreCase("Quoc te"))) {
+            errors.add("Insurance Limit is Invalid!");
+        }
+
+        return errors;
     }
 
-    public String inputNationHandcarried() {
-        Scanner scanner = new Scanner(System.in);
-        String nationHandcarried = "";
-        boolean check = false;
-        do {
-            System.out.print("Nhap quoc gia xach tay: ");
-            nationHandcarried = scanner.nextLine();
-            if (!nationHandcarried.equalsIgnoreCase("Viet Nam")) {
-                check = true;
-            }
+    public ArrayList<String> validateHandCarried(
+            String name, String price, String amount, String producer,
+            String nationHandcarried, String status
+    ) {
+        ArrayList<String> errors = new ArrayList<>();
+        errors.addAll(validateGeneral(name, price, amount, producer));
+        // Validate nation handcarrired
+        if (nationHandcarried.equalsIgnoreCase("Viet Nam")) {
+            errors.add("Nation Hand Carried From is Invalid!");
         }
-        while (!check);
-        return nationHandcarried;
+        // Validate status
+        if (!(status.equalsIgnoreCase("Chua sua chua") || !status.equalsIgnoreCase("Da sua chua"))) {
+            errors.add("Status is Invalid!");
+        }
+        return errors;
     }
 
-    public String inputStatus() {
-        Scanner scanner = new Scanner(System.in);
-        String status = "";
-        boolean check = false;
-        do {
-            System.out.print("Nhap trang thai: ");
-            status = scanner.nextLine();
-            if (status.equalsIgnoreCase("Da sua chua")
-                    || status.equalsIgnoreCase("Chua sua chua")) {
-                check = true;
-            }
+    public ArrayList<String> validateGeneral(
+            String name, String price, String amount, String producer
+    ) {
+        ArrayList<String> errors = new ArrayList<>();
+        // Validate name
+        if (name.equals("")) {
+            errors.add("Name is Invalid!");
         }
-        while (!check);
-        return status;
+        // Validate price
+        try {
+            if (Double.parseDouble(price) < 0) {
+                errors.add("Price is Invalid!");
+            }
+        } catch (Exception e) {
+            errors.add("Price is Invalid!");
+        }
+        // Validate Amount
+        try {
+            if (Integer.parseInt(amount) < 0) {
+                errors.add("Amount is Invalid!");
+            }
+        } catch (Exception e) {
+            errors.add("Amount is Invalid!");
+        }
+        // Validate producer
+        if (producer.equals("")) {
+            errors.add("Producer is Invalid!");
+        }
+        return errors;
+    }
+
+    public String input(String attribute) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input " + attribute + " :");
+        String result = scanner.nextLine();
+        return result;
     }
 
 }

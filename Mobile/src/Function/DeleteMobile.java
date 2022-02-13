@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DeleteMobile {
+public class DeleteMobile extends ReadFile{
     public void delete() throws NotFoundProductException {
         Scanner scanner = new Scanner(System.in);
         boolean check = false;
@@ -56,26 +56,10 @@ public class DeleteMobile {
             }
 
             bw.close();
-            System.out.println("Data successfully appended at the end of file");
         }catch(IOException ioe){
-            System.out.println("Exception occurred:");
             ioe.printStackTrace();
         }
     }
 
-    public ArrayList<String> readFile() {
-        String result;
-        ArrayList<String> listResult = new ArrayList<>();
-        try {
-            Scanner fr = new Scanner(new File("data/mobile.csv"));
-            while (fr.hasNext()) {
-                result = fr.nextLine();
-                listResult.add(result);
-            }
-            fr.close();
-        } catch (Exception e) {
-            System.out.println("Co loi xay ra");
-        }
-        return listResult;
-    }
+
 }

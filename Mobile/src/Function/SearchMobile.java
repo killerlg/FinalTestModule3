@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class SearchMobile {
+public class SearchMobile extends ReadFile{
     public void search() throws NotFoundProductException {
         Scanner scanner = new Scanner(System.in);
         boolean check = false;
@@ -26,24 +26,6 @@ public class SearchMobile {
                 System.out.println("Khong tim duoc san pham!");
             }
 
-
-
-
     }
 
-    public ArrayList<String> readFile() {
-        String result;
-        ArrayList<String> listResult = new ArrayList<>();
-        try {
-            Scanner fr = new Scanner(new File("data/mobile.csv"));
-            while (fr.hasNext()) {
-                result = fr.nextLine();
-                listResult.add(result);
-            }
-            fr.close();
-        } catch (Exception e) {
-            System.out.println("Co loi xay ra");
-        }
-        return listResult;
-    }
 }

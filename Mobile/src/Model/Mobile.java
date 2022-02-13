@@ -2,6 +2,7 @@ package Model;
 
 public abstract class Mobile {
     private int id;
+    private String type;
     private String name;
     private Double price;
     private int amount;
@@ -10,12 +11,21 @@ public abstract class Mobile {
     public Mobile() {
     }
 
-    public Mobile(int id, String name, Double price, int amount, String producer) {
+    public Mobile(int id, String type, String name, Double price, int amount, String producer) {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.price = price;
         this.amount = amount;
         this.producer = producer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getId() {
