@@ -13,22 +13,6 @@ public class GenuineMobile extends Mobile{
         this.insuranceLimit = insuranceLimit;
     }
 
-    public int getInsuranceTime() {
-        return insuranceTime;
-    }
-
-    public void setInsuranceTime(int insuranceTime) {
-        this.insuranceTime = insuranceTime;
-    }
-
-    public String getInsuranceLimit() {
-        return insuranceLimit;
-    }
-
-    public void setInsuranceLimit(String insuranceLimit) {
-        this.insuranceLimit = insuranceLimit;
-    }
-
     @Override
     public String toString() {
         return this.getId()+","

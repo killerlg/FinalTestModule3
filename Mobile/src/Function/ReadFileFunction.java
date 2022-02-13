@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ReadFile {
+public class ReadFileFunction {
     public ArrayList<String> readFile() {
         String result;
         ArrayList<String> listResult = new ArrayList<>();

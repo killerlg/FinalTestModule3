@@ -1,13 +1,9 @@
 package Function;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class SearchMobile extends ReadFile{
+public class SearchMobileFunction extends ReadFileFunction {
     public void search() throws NotFoundProductException {
         Scanner scanner = new Scanner(System.in);
         boolean check = false;

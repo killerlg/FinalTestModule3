@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DeleteMobile extends ReadFile{
+public class DeleteMobileFunction extends ReadFileFunction {
     public void delete() throws NotFoundProductException {
         Scanner scanner = new Scanner(System.in);
         boolean check = false;

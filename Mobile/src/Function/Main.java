@@ -49,15 +49,15 @@ public class Main {
 
 
     public static void addMobile() {
-        AddMobile addMobile = new AddMobile();
+        AddMobileFunction addMobile = new AddMobileFunction();
         addMobile.addMobile(nextIndex);
         nextIndex++;
     }
 
     public static void deleteMobile() throws NotFoundProductException {
         try {
-            DeleteMobile deleteMobile = new DeleteMobile();
-            deleteMobile.delete();
+            DeleteMobileFunction deleteMobileFunction = new DeleteMobileFunction();
+            deleteMobileFunction.delete();
         } catch (NotFoundProductException e) {
             System.out.println("Du lieu trong file trong");
         }
@@ -65,8 +65,8 @@ public class Main {
     }
 
     public static void readNextIndex() {
-        DisplayAllMobile displayAllMobile = new DisplayAllMobile();
-        ArrayList<String> listResult = displayAllMobile.readFile();
+        DisplayAllMobileFunction displayAllMobileFunction = new DisplayAllMobileFunction();
+        ArrayList<String> listResult = displayAllMobileFunction.readFile();
         if (!listResult.isEmpty()) {
             String result = listResult.get(listResult.size() - 1);
             nextIndex = Integer.parseInt(result.substring(0, result.indexOf(",")));
@@ -76,14 +76,14 @@ public class Main {
     }
 
     public static void displayFile() {
-        DisplayAllMobile displayAllMobile = new DisplayAllMobile();
-        displayAllMobile.displayAllMobile();
+        DisplayAllMobileFunction displayAllMobileFunction = new DisplayAllMobileFunction();
+        displayAllMobileFunction.displayAllMobile();
     }
 
     public static void search() {
         try {
-            SearchMobile searchMobile = new SearchMobile();
-            searchMobile.search();
+            SearchMobileFunction searchMobileFunction = new SearchMobileFunction();
+            searchMobileFunction.search();
         } catch (NotFoundProductException e) {
             System.out.println("Du lieu khong hop le");
         }

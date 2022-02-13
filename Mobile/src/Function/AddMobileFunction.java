@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AddMobile {
+public class AddMobileFunction {
     public Mobile addMobile(int id) {
         boolean check = true;
         Mobile mobile = null;
