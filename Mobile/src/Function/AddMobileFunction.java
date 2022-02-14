@@ -92,7 +92,7 @@ public class AddMobileFunction {
             errors.add("Insurance Time is Invalid!");
         }
         // Validate Insurance Limit
-        if (!(insuranceLimit.equalsIgnoreCase("Toan quoc") || !insuranceLimit.equalsIgnoreCase("Quoc te"))) {
+        if (!((insuranceLimit.equalsIgnoreCase("Toan quoc") || insuranceLimit.equalsIgnoreCase("Quoc te")))) {
             errors.add("Insurance Limit is Invalid!");
         }
 

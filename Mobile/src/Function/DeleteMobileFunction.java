@@ -45,10 +45,7 @@ public class DeleteMobileFunction extends ReadFileFunction {
 
 
         try{
-            File file =new File("data/mobile.csv");
-            if(!file.exists()){
-                file.createNewFile();
-            }
+            File file =new File("Mobile/data/mobile.csv");
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             for (int i=0; i<listResult.size();i++) {
