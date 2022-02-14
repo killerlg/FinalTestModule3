@@ -7,31 +7,16 @@ public class GenuineMobile extends Mobile{
     public GenuineMobile() {
     }
 
-    public GenuineMobile(int id, String name, Double price, int amount, String producer, int insuranceTime, String insuranceLimit) {
-        super(id, name, price, amount, producer);
+    public GenuineMobile(int id, String type, String name, Double price, int amount, String producer, int insuranceTime, String insuranceLimit) {
+        super(id, type, name, price, amount, producer);
         this.insuranceTime = insuranceTime;
-        this.insuranceLimit = insuranceLimit;
-    }
-
-    public int getInsuranceTime() {
-        return insuranceTime;
-    }
-
-    public void setInsuranceTime(int insuranceTime) {
-        this.insuranceTime = insuranceTime;
-    }
-
-    public String getInsuranceLimit() {
-        return insuranceLimit;
-    }
-
-    public void setInsuranceLimit(String insuranceLimit) {
         this.insuranceLimit = insuranceLimit;
     }
 
     @Override
     public String toString() {
         return this.getId()+","
+                + this.getType() + ","
                 + this.getName() + ","
                 + String.format("%,.0f",this.getPrice()).replace(",",".") + ","
                 + this.getAmount() + ","
