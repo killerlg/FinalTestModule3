@@ -1,5 +1,7 @@
 package Function;
 
+import Service.MobileServiceImpl;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,8 +10,7 @@ public class Main {
     public static int nextIndex = 0;
 
     public static void main(String[] args) throws NotFoundProductException {
-//        Read next index
-        readNextIndex();
+        MobileServiceImpl mobileService = new MobileServiceImpl();
         boolean check = false;
         do {
             Scanner scanner = new Scanner(System.in);
@@ -23,23 +24,22 @@ public class Main {
             String selection = scanner.nextLine();
             switch (selection) {
                 case "1":
-                    addMobile();
+                    mobileService.addMobile();
                     break;
                 case "2":
-                    deleteMobile();
-                    displayFile();
+                    mobileService.deleteMobile();
+                    mobileService.displayFile();
                     break;
                 case "3":
-                    displayFile();
+                    mobileService.displayFile();
                     break;
                 case "4":
-                    search();
+                    mobileService.search();
                     break;
                 case "0":
                     System.exit(0);
                     break;
             }
-
 
             if (selection.equals("0")) {
                 check = true;
@@ -47,45 +47,4 @@ public class Main {
         } while (!check);
     }
 
-
-    public static void addMobile() {
-        AddMobileFunction addMobile = new AddMobileFunction();
-        addMobile.addMobile(nextIndex);
-        nextIndex++;
-    }
-
-    public static void deleteMobile() throws NotFoundProductException {
-        try {
-            DeleteMobileFunction deleteMobileFunction = new DeleteMobileFunction();
-            deleteMobileFunction.delete();
-        } catch (NotFoundProductException e) {
-            System.out.println("Du lieu trong file trong");
-        }
-
-    }
-
-    public static void readNextIndex() {
-        DisplayAllMobileFunction displayAllMobileFunction = new DisplayAllMobileFunction();
-        ArrayList<String> listResult = displayAllMobileFunction.readFile();
-        if (!listResult.isEmpty()) {
-            String result = listResult.get(listResult.size() - 1);
-            nextIndex = Integer.parseInt(result.substring(0, result.indexOf(",")));
-        } else {
-            nextIndex = 1;
-        }
-    }
-
-    public static void displayFile() {
-        DisplayAllMobileFunction displayAllMobileFunction = new DisplayAllMobileFunction();
-        displayAllMobileFunction.displayAllMobile();
-    }
-
-    public static void search() {
-        try {
-            SearchMobileFunction searchMobileFunction = new SearchMobileFunction();
-            searchMobileFunction.search();
-        } catch (NotFoundProductException e) {
-            System.out.println("Du lieu khong hop le");
-        }
-    }
 }

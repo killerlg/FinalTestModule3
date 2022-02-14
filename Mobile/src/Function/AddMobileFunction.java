@@ -30,7 +30,7 @@ public class AddMobileFunction {
                 String insuranceLimit = input("insurance limit");
 
                 ArrayList<String> errors = validateOffical(name, price, amount, producer, insuranceTime, insuranceLimit);
-                if (errors.size() != 0) {
+                if (errors.size() == 0) {
                     mobile = new GenuineMobile(id, type, name, Double.parseDouble(price), Integer.parseInt(amount),
                             producer, Integer.parseInt(insuranceTime), insuranceLimit);
                 } else {
@@ -44,7 +44,7 @@ public class AddMobileFunction {
                 String nationHandcarried = input("nation hand carried from");
                 String status = input("status");
                 ArrayList<String> errors = validateHandCarried(name, price, amount, producer, nationHandcarried, status);
-                if (errors.size() != 0) {
+                if (errors.size() == 0) {
                     mobile = new HandCarriedMobile(id, type, name, Double.parseDouble(price), Integer.parseInt(amount),
                             producer, nationHandcarried, status);
                 } else {
@@ -65,10 +65,7 @@ public class AddMobileFunction {
 
     public void writeMobileToFile(Mobile mobile) {
         try {
-            File file = new File("data/mobile.csv");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            File file = new File("Mobile/data/mobile.csv");
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(mobile.toString() + "\n");
@@ -113,7 +110,7 @@ public class AddMobileFunction {
             errors.add("Nation Hand Carried From is Invalid!");
         }
         // Validate status
-        if (!(status.equalsIgnoreCase("Chua sua chua") || !status.equalsIgnoreCase("Da sua chua"))) {
+        if (!((status.equalsIgnoreCase("Chua sua chua") || status.equalsIgnoreCase("Da sua chua")))) {
             errors.add("Status is Invalid!");
         }
         return errors;

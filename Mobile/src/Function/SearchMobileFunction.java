@@ -13,6 +13,7 @@ public class SearchMobileFunction extends ReadFileFunction {
             for (int i=0; i<listResult.size();i++) {
                 int index = listResult.get(i).indexOf(",");
                 index = listResult.get(i).indexOf(",",index+1);
+                index = listResult.get(i).indexOf(",",index+1);
                 if (listResult.get(i).substring(0,index).indexOf(id) != -1) {
                     System.out.println(listResult.get(i));
                     check = true;

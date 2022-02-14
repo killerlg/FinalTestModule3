@@ -9,14 +9,14 @@ public class ReadFileFunction {
         String result;
         ArrayList<String> listResult = new ArrayList<>();
         try {
-            Scanner fr = new Scanner(new File("data/mobile.csv"));
+            Scanner fr = new Scanner(new File("Mobile/data/mobile.csv"));
             while (fr.hasNext()) {
                 result = fr.nextLine();
                 listResult.add(result);
             }
             fr.close();
         } catch (Exception e) {
-            System.out.println("Co loi xay ra");
+            System.out.println("Co loi xay ra!");
         }
         return listResult;
     }
